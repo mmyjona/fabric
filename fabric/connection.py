@@ -115,6 +115,7 @@ class Connection(Context):
         self,
         host,
         user=None,
+        password=None,
         port=None,
         config=None,
         gateway=None,
@@ -263,6 +264,8 @@ class Connection(Context):
         self.user = user or self.ssh_config.get('user', self.config.user)
         # TODO: is it _ever_ possible to give an empty user value (e.g.
         # user='')? E.g. do some SSH server specs allow for that?
+
+        self.password = password or ''
 
         #: The network port to connect on.
         self.port = port or int(self.ssh_config.get('port', self.config.port))
@@ -444,6 +447,7 @@ class Connection(Context):
             kwargs = dict(
                 self.connect_kwargs,
                 username=self.user,
+                password=self.password,
                 hostname=self.host,
                 port=self.port,
             )
